@@ -1,0 +1,44 @@
+.checkers {
+    width: 500px;
+    height: 500px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.checkers td {
+    width: 12%;
+    height: 12%;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #666;
+}
+
+.checkers tr:nth-child(even) td:nth-child(odd) {
+    background: #666;
+}
+
+.checkers tr:nth-child(odd) td:nth-child(even) {
+    background: #666;
+}
+
+.black {
+    width: 90%;
+    height: 90%;
+    display: inline-block;
+    border: 2px solid #222;
+    border-radius: 50%;
+    background: rgb(43, 41, 41);
+}
+
+.white {
+    width: 90%;
+    height: 90%;
+    display: inline-block;
+    border: 2px solid rgb(43, 41, 41);
+    border-radius: 50%;
+    background: rgb(236, 235, 235);
+}
+
+table {
+    border: 5px solid rgb(43, 41, 41);
+}
