@@ -3,7 +3,7 @@ window.onload = function() {
     var activeChecker;
     var shouldBeat = false;
 
-    //расставляем черых
+    //Расставляем черых
     for (var i = 1; i < 4; i++) {
         for (var j = 1; j < 9; j++) {
             if (!((j - i) % 2 == 0)) {
@@ -14,7 +14,7 @@ window.onload = function() {
         }
     }
 
-    //расставляем белых
+    //Расставляем белых
     for (var i = 6; i < 9; i++) {
         for (var j = 1; j < 9; j++) {
             if (!((j - i) % 2 == 0)) {
@@ -25,6 +25,7 @@ window.onload = function() {
         }
     }
 
+    //Обновляем состояние доски и шашек
     function update() {
         activeChecker = NaN;
         for (var i = 1; i < 9; i++) {
@@ -44,6 +45,7 @@ window.onload = function() {
         }
     }
 
+    //Проверяем может ли шашка побить вражескую шашку по указанной диагонали
     function checkToBeat(row, col, x, y, enemyColor, canWalkOption = true) {
         var element = document.querySelector("tr.row_" + row + " > td.col_" + col);
         var queen = element.children[0].dataset.queen == 'true';
@@ -78,6 +80,7 @@ window.onload = function() {
         }
     }
 
+    //Проверка,что шашка может походить по указанной диагонали
     function checkToMove(row, col, x, y) {
         var element = document.querySelector("tr.row_" + row + " > td.col_" + col);
         var queen = element.children[0].dataset.queen == 'true';
@@ -93,6 +96,7 @@ window.onload = function() {
         }
     }
 
+    //Проверяем, нужно ли совершить бой для шашек активного цвета
     function checkToShouldBeat() {
         var enemyColor = activeColor == 'white' ? 'black' : 'white';
         for (var i = 1; i < 9; i++) {
@@ -108,6 +112,7 @@ window.onload = function() {
         }
     }
 
+    //Показывает возможные ходы для выбранной шашки
     function showPossibleMoves(checker) {
         var row = parseInt(checker.dataset.row);
         var col = parseInt(checker.dataset.col);
@@ -137,6 +142,7 @@ window.onload = function() {
         }
     }
 
+    //Забираем побитую шашку
     function beat(x, y, x_before, y_before) {
         count = x_before - x;
         axis_x = x_before - x < 0 ? -1 : 1;
@@ -151,16 +157,12 @@ window.onload = function() {
         }
     }
 
+    //Двигаем шашку
     function move(element) {
         element.innerHTML = activeChecker.innerHTML;
         activeChecker.innerHTML = '';
         activeChecker.dataset.color = '';
         element.dataset.color = activeColor;
-        x_after = parseInt(element.children[0].dataset.col);
-        y_after = parseInt(element.children[0].dataset.row);
-        update();
-        x_before = parseInt(element.children[0].dataset.col);
-        y_before = parseInt(element.children[0].dataset.row);
         if (element.dataset.color == "white" && y_before == 1) {
             var checker = element.children[0];
             checker.dataset.queen = true;
@@ -172,10 +174,11 @@ window.onload = function() {
             checker.style.backgroundColor = '#2F4F4F';
         }
         if (shouldBeat) {
-            console.log('after');
-            console.log('x', x_after, 'y', y_after);
-            console.log('before');
-            console.log(x_before, y_before);
+            x_after = parseInt(element.children[0].dataset.col);
+            y_after = parseInt(element.children[0].dataset.row);
+            update();
+            x_before = parseInt(element.children[0].dataset.col);
+            y_before = parseInt(element.children[0].dataset.row);
             beat(x_after, y_after, x_before, y_before);
             shouldBeat = false;
             checkToShouldBeat();
@@ -188,6 +191,7 @@ window.onload = function() {
         update();
     }
 
+    //Отслеживаем событие клика на шашку активного цвета на поле
     document.querySelector('.checkers').addEventListener('click', function() {
         if (event.target.className == activeColor) {
             update();
